@@ -95,11 +95,12 @@ class SQLModel(object):
 
                 predictions = pd.read_sql(
                     self.query.format(items_table = items), con
-                    )["class"].values
-
+                    )#["class"].values
+                
         targets = self.model.classes_
+        predictions["class"] = targets[predictions["class"].values]
 
-        return targets[predictions]
+        return predictions
     
 
 
