@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from sqlalchemy import text
-from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import accuracy_score
 
 # ------------------------------------------- SQL QUERIES FOR IN-DB FIT ---------------------------------------------------
@@ -121,11 +121,10 @@ Q_sample_rows_from_db = """
 def featurize(engine, table_name, attributes, foreign_keys):
 
     """ Convert normalized db into the format expected by BornClassifierSQL, that is (item, feature, weight)
-    
-            Args:
-                train_table::str = name of table or view with items indices
-                attributes::List[str] = a list of qualified attribute/column names to be used as features
-                foreign_keys::List[str] = a list with foreign keys to attribute tables
+        Args:
+            train_table::str = name of table or view with items indices
+            attributes::List[str] = a list of qualified attribute/column names to be used as features
+            foreign_keys::List[str] = a list with foreign keys to attribute tables
     
     """
 
@@ -147,8 +146,8 @@ def featurize_table(engine, table_name, mutate_cols):
         This function is used to formated data from db for the out-of-db training.
 
         Args:
-                train_table::str = name of denormalized table with training data
-                mutate_cols::List[str] = a list of column names to be used as features
+            train_table::str = name of denormalized table with training data
+            mutate_cols::List[str] = a list of column names to be used as features
 
         """
 
@@ -165,11 +164,10 @@ def featurize_table(engine, table_name, mutate_cols):
 def update_corpus(engine, train_table, attributes, foreign_keys):
 
     """ Implements partial fit, but instead of writing items into a table, fits the model from normalized db
-        
-            Args:
-                train_table::str = name of table or view with items indices
-                attributes::List[str] = a list of qualified attribute/column names to be used as features
-                foreign_keys::List[str] = a list with foreign keys to attribute tables
+        Args:
+            train_table::str = name of table or view with items indices
+            attributes::List[str] = a list of qualified attribute/column names to be used as features
+            foreign_keys::List[str] = a list with foreign keys to attribute tables
         """
 
     attributes = "'{" +  ", ".join('"'+col+'"' for col in attributes) + "}'"
